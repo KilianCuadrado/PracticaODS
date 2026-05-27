@@ -29,7 +29,17 @@ const handleLoginSubmit = async (event) => {
 
   try {
     const response = await loginUser(email, password);
-    setSessionUser(response.user);
+    setSessionUser({
+      id: response.user.id,
+      username: response.user.username,
+      email: response.user.email,
+      role: response.user.role,
+      baseRole: response.user.baseRole,
+      orgId: response.user.orgId,
+      ownedOrgId: response.user.ownedOrgId,
+      ownedOrgStatus: response.user.ownedOrgStatus,
+      token: response.token,
+    });
     window.location.href = '/';
   } catch (error) {
     showToast({ message: error.message, type: 'error' });

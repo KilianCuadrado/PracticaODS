@@ -1,20 +1,20 @@
 import {
-  createOrg,
-  createOrgJoinRequest,
-  deleteOrg,
-  findOrgById,
-  findOrgByName,
-  listOrgRequests,
-  listOrgs,
-  resolveOrgRequest,
-  updateOrg,
-  updateOrgStatus,
-} from '../models/orgsModel.js';
+  createOng,
+  createOngJoinRequest,
+  deleteOng,
+  findOngById,
+  findOngByName,
+  listOngRequests,
+  listOngs,
+  resolveOngRequest,
+  updateOng,
+  updateOngStatus,
+} from '../models/ongsModel.js';
 import { findUserById } from '../models/usersModel.js';
 import { parseId, sendError } from '../utils/http.js';
 
 /**
- * Listado de ORGs.
+ * Listado de ONGs.
  *
  * @author KiliaCuadrado
  * @date 2026-05-27
@@ -22,14 +22,14 @@ import { parseId, sendError } from '../utils/http.js';
  * @param {import('express').Response} res
  * @returns {import('express').Response}
  */
-export const getOrgs = (req, res) => {
+export const getOngs = (req, res) => {
   const status = req.query?.status;
-  const orgs = listOrgs(status);
-  return res.json(orgs);
+  const ongs = listOngs(status);
+  return res.json(ongs);
 };
 
 /**
- * Detalle de ORG.
+ * Detalle de ONG.
  *
  * @author KiliaCuadrado
  * @date 2026-05-27
@@ -37,20 +37,20 @@ export const getOrgs = (req, res) => {
  * @param {import('express').Response} res
  * @returns {import('express').Response}
  */
-export const getOrgById = (req, res) => {
-  const orgId = parseId(req.params.id);
-  if (Number.isNaN(orgId)) {
-    return sendError(res, 400, 'ID de ORG no válido');
+export const getOngById = (req, res) => {
+  const ongId = parseId(req.params.id);
+  if (Number.isNaN(ongId)) {
+    return sendError(res, 400, 'ID de ONG no válido');
   }
-  const org = findOrgById(orgId);
-  if (!org) {
-    return sendError(res, 404, 'ORG no encontrada');
+  const ong = findOngById(ongId);
+  if (!ong) {
+    return sendError(res, 404, 'ONG no encontrada');
   }
-  return res.json(org);
+  return res.json(ong);
 };
 
 /**
- * Crear ORG directa.
+ * Crear ONG directa.
  *
  * @author KiliaCuadrado
  * @date 2026-05-27
@@ -58,7 +58,7 @@ export const getOrgById = (req, res) => {
  * @param {import('express').Response} res
  * @returns {import('express').Response}
  */
-export const createNewOrg = (req, res) => {
+export const createNewOng = (req, res) => {
   const name = req.body?.name;
   const description = req.body?.description;
 
@@ -66,12 +66,12 @@ export const createNewOrg = (req, res) => {
     return sendError(res, 400, 'name y description son obligatorios');
   }
 
-  const existingOrg = findOrgByName(name);
-  if (existingOrg) {
-    return sendError(res, 409, 'Ya existe una ORG con ese nombre');
+  const existingOng = findOngByName(name);
+  if (existingOng) {
+    return sendError(res, 409, 'Ya existe una ONG con ese nombre');
   }
 
-  const newOrg = createOrg({
+  const newOng = createOng({
     name,
     description,
     image: req.body?.image || '',
@@ -81,11 +81,11 @@ export const createNewOrg = (req, res) => {
     status: req.body?.status || 'approved',
   });
 
-  return res.status(201).json(newOrg);
+  return res.status(201).json(newOng);
 };
 
 /**
- * Actualizar ORG.
+ * Actualizar ONG.
  *
  * @author KiliaCuadrado
  * @date 2026-05-27
@@ -93,18 +93,18 @@ export const createNewOrg = (req, res) => {
  * @param {import('express').Response} res
  * @returns {import('express').Response}
  */
-export const updateOrgById = (req, res) => {
-  const orgId = parseId(req.params.id);
-  if (Number.isNaN(orgId)) {
-    return sendError(res, 400, 'ID de ORG no válido');
+export const updateOngById = (req, res) => {
+  const ongId = parseId(req.params.id);
+  if (Number.isNaN(ongId)) {
+    return sendError(res, 400, 'ID de ONG no válido');
   }
 
-  const currentOrg = findOrgById(orgId);
-  if (!currentOrg) {
-    return sendError(res, 404, 'ORG no encontrada');
+  const currentOng = findOngById(ongId);
+  if (!currentOng) {
+    return sendError(res, 404, 'ONG no encontrada');
   }
 
-  const updatedOrg = updateOrg(orgId, {
+  const updatedOng = updateOng(ongId, {
     name: req.body?.name,
     description: req.body?.description,
     image: req.body?.image,
@@ -112,11 +112,11 @@ export const updateOrgById = (req, res) => {
     contactEmail: req.body?.contactEmail,
   });
 
-  return res.json(updatedOrg);
+  return res.json(updatedOng);
 };
 
 /**
- * Eliminar ORG.
+ * Eliminar ONG.
  *
  * @author KiliaCuadrado
  * @date 2026-05-27
@@ -124,22 +124,22 @@ export const updateOrgById = (req, res) => {
  * @param {import('express').Response} res
  * @returns {import('express').Response}
  */
-export const deleteOrgById = (req, res) => {
-  const orgId = parseId(req.params.id);
-  if (Number.isNaN(orgId)) {
-    return sendError(res, 400, 'ID de ORG no válido');
+export const deleteOngById = (req, res) => {
+  const ongId = parseId(req.params.id);
+  if (Number.isNaN(ongId)) {
+    return sendError(res, 400, 'ID de ONG no válido');
   }
 
-  const deletedOrg = deleteOrg(orgId);
-  if (!deletedOrg) {
-    return sendError(res, 404, 'ORG no encontrada');
+  const deletedOng = deleteOng(ongId);
+  if (!deletedOng) {
+    return sendError(res, 404, 'ONG no encontrada');
   }
 
-  return res.json({ message: 'ORG eliminada', org: deletedOrg });
+  return res.json({ message: 'ONG eliminada', ong: deletedOng });
 };
 
 /**
- * Cambiar estado de ORG.
+ * Cambiar estado de ONG.
  *
  * @author KiliaCuadrado
  * @date 2026-05-27
@@ -147,26 +147,26 @@ export const deleteOrgById = (req, res) => {
  * @param {import('express').Response} res
  * @returns {import('express').Response}
  */
-export const updateOrgStatusById = (req, res) => {
-  const orgId = parseId(req.params.id);
+export const updateOngStatusById = (req, res) => {
+  const ongId = parseId(req.params.id);
   const status = req.body?.status;
-  if (Number.isNaN(orgId)) {
-    return sendError(res, 400, 'ID de ORG no válido');
+  if (Number.isNaN(ongId)) {
+    return sendError(res, 400, 'ID de ONG no válido');
   }
   if (!['pending', 'approved', 'rejected'].includes(status)) {
     return sendError(res, 400, 'status debe ser pending, approved o rejected');
   }
 
-  const updatedOrg = updateOrgStatus(orgId, status);
-  if (!updatedOrg) {
-    return sendError(res, 404, 'ORG no encontrada');
+  const updatedOng = updateOngStatus(ongId, status);
+  if (!updatedOng) {
+    return sendError(res, 404, 'ONG no encontrada');
   }
 
-  return res.json(updatedOrg);
+  return res.json(updatedOng);
 };
 
 /**
- * Solicitar unirse a una ORG.
+ * Solicitar unirse a una ONG.
  *
  * @author KiliaCuadrado
  * @date 2026-05-27
@@ -174,32 +174,32 @@ export const updateOrgStatusById = (req, res) => {
  * @param {import('express').Response} res
  * @returns {import('express').Response}
  */
-export const requestJoinOrg = (req, res) => {
-  const orgId = parseId(req.params.id);
+export const requestJoinOng = (req, res) => {
+  const ongId = parseId(req.params.id);
   const userId = parseId(req.body?.userId);
-  if (Number.isNaN(orgId) || Number.isNaN(userId)) {
-    return sendError(res, 400, 'orgId y userId deben ser válidos');
+  if (Number.isNaN(ongId) || Number.isNaN(userId)) {
+    return sendError(res, 400, 'ongId y userId deben ser válidos');
   }
 
-  const orgExists = findOrgById(orgId);
+  const orgExists = findOngById(ongId);
   const userExists = findUserById(userId);
   if (!orgExists || !userExists) {
-    return sendError(res, 404, 'ORG o usuario no encontrado');
+    return sendError(res, 404, 'ONG o usuario no encontrado');
   }
 
-  const requests = listOrgRequests(orgId);
+  const requests = listOngRequests(ongId);
   for (let i = 0; i < requests.length; i += 1) {
     if (Number(requests[i].userId) === Number(userId) && requests[i].status === 'pending') {
-      return sendError(res, 409, 'Ya existe una solicitud pendiente para esta ORG');
+      return sendError(res, 409, 'Ya existe una solicitud pendiente para esta ONG');
     }
   }
 
-  const newRequest = createOrgJoinRequest(orgId, userId);
+  const newRequest = createOngJoinRequest(ongId, userId);
   return res.status(201).json(newRequest);
 };
 
 /**
- * Listar solicitudes de ORG.
+ * Listar solicitudes de ONG.
  *
  * @author KiliaCuadrado
  * @date 2026-05-27
@@ -207,12 +207,12 @@ export const requestJoinOrg = (req, res) => {
  * @param {import('express').Response} res
  * @returns {import('express').Response}
  */
-export const getOrgRequests = (req, res) => {
-  const orgId = parseId(req.params.id);
-  if (Number.isNaN(orgId)) {
-    return sendError(res, 400, 'ID de ORG no válido');
+export const getOngRequests = (req, res) => {
+  const ongId = parseId(req.params.id);
+  if (Number.isNaN(ongId)) {
+    return sendError(res, 400, 'ID de ONG no válido');
   }
-  const requests = listOrgRequests(orgId);
+  const requests = listOngRequests(ongId);
   return res.json(requests);
 };
 
@@ -225,18 +225,18 @@ export const getOrgRequests = (req, res) => {
  * @param {import('express').Response} res
  * @returns {import('express').Response}
  */
-export const resolveOrgJoinRequest = (req, res) => {
-  const orgId = parseId(req.params.orgId);
+export const resolveOngJoinRequest = (req, res) => {
+  const ongId = parseId(req.params.orgId);
   const requestId = parseId(req.params.requestId);
   const status = req.body?.status;
-  if (Number.isNaN(orgId) || Number.isNaN(requestId)) {
-    return sendError(res, 400, 'orgId y requestId deben ser válidos');
+  if (Number.isNaN(ongId) || Number.isNaN(requestId)) {
+    return sendError(res, 400, 'ongId y requestId deben ser válidos');
   }
   if (!['approved', 'rejected'].includes(status)) {
     return sendError(res, 400, 'status debe ser approved o rejected');
   }
 
-  const updatedRequest = resolveOrgRequest(orgId, requestId, status);
+  const updatedRequest = resolveOngRequest(ongId, requestId, status);
   if (!updatedRequest) {
     return sendError(res, 404, 'Solicitud no encontrada');
   }

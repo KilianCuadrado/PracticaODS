@@ -233,7 +233,7 @@ export const getUserEvents = async (userId) => {
  * @returns {Promise<any>}
  * @throws {Error} Cuando la respuesta no es OK.
  */
-export const getUserOrgRequests = async (userId) => {
+export const getUserOngRequests = async (userId) => {
   const headers = { 'Content-Type': 'application/json' };
   const currentUser = getSessionUser();
   if (currentUser) {
@@ -243,7 +243,7 @@ export const getUserOrgRequests = async (userId) => {
       headers['x-org-id'] = String(currentUser.ownedOrgId);
     }
   }
-  const response = await fetch(`/api/users/${userId}/org-requests`, { headers });
+  const response = await fetch(`/api/users/${userId}/ong-requests`, { headers });
 
   let data = null;
   try {

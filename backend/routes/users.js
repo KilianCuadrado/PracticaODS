@@ -3,7 +3,7 @@ import {
   deleteUserById,
   getUserById,
   getUserEvents,
-  getUserOrgRequests,
+  getUserOngRequests,
   getUsers,
   updateUserById,
 } from '../controllers/usersController.js';
@@ -23,5 +23,6 @@ export const registerUserRoutes = (app) => {
   app.put('/api/users/:id', updateUserById);
   app.delete('/api/users/:id', deleteUserById);
   app.get('/api/users/:id/events', getUserEvents);
-  app.get('/api/users/:id/org-requests', getUserOrgRequests);
+  app.get('/api/users/:id/ong-requests', getUserOngRequests);
+  app.get('/api/users/:id/org-requests', getUserOngRequests);
 };

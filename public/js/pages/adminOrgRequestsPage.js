@@ -1,4 +1,4 @@
-import { getOrgs, setOrgStatus } from '../api/orgsApi.js';
+import { getOngs, setOngStatus } from '../api/orgsApi.js';
 import { showToast } from '../components/toast.js';
 import { getSessionUser } from '../utils/session.js';
 
@@ -21,7 +21,7 @@ const ensureAdmin = () => {
 };
 
 /**
- * Carga orgs pendientes y asigna acciones.
+ * Carga ONGs pendientes y asigna acciones.
  *
  * @author KiliaCuadrado
  * @date 2026-05-27
@@ -31,7 +31,7 @@ const loadPendingOrgs = async () => {
   if (!ensureAdmin()) {
     return;
   }
-  const pendingOrgs = await getOrgs('pending');
+  const pendingOrgs = await getOngs('pending');
   orgRequestsBody.innerHTML = pendingOrgs.length
     ? pendingOrgs
         .map(
@@ -54,9 +54,9 @@ const loadPendingOrgs = async () => {
   document.querySelectorAll('.approveOrgBtn').forEach((button) => {
     button.addEventListener('click', async () => {
       try {
-        await setOrgStatus(button.dataset.id, 'approved');
+        await setOngStatus(button.dataset.id, 'approved');
         await loadPendingOrgs();
-        showToast({ message: 'ORG aprobada', type: 'success' });
+        showToast({ message: 'ONG aprobada', type: 'success' });
       } catch (error) {
         showToast({ message: error.message, type: 'error' });
       }
@@ -66,9 +66,9 @@ const loadPendingOrgs = async () => {
   document.querySelectorAll('.rejectOrgBtn').forEach((button) => {
     button.addEventListener('click', async () => {
       try {
-        await setOrgStatus(button.dataset.id, 'rejected');
+        await setOngStatus(button.dataset.id, 'rejected');
         await loadPendingOrgs();
-        showToast({ message: 'ORG rechazada', type: 'success' });
+        showToast({ message: 'ONG rechazada', type: 'success' });
       } catch (error) {
         showToast({ message: error.message, type: 'error' });
       }
@@ -77,7 +77,7 @@ const loadPendingOrgs = async () => {
 };
 
 /**
- * Inicializa la vista de solicitudes de org.
+ * Inicializa la vista de solicitudes de ONG.
  *
  * @author KiliaCuadrado
  * @date 2026-05-27

@@ -36,7 +36,7 @@ const buildQuery = (params) => {
  * @returns {Promise<any>}
  * @throws {Error} Cuando la respuesta no es OK.
  */
-export const getOrgs = async (status) => {
+export const getOngs = async (status) => {
   const headers = { 'Content-Type': 'application/json' };
   const currentUser = getSessionUser();
   if (currentUser) {
@@ -46,7 +46,7 @@ export const getOrgs = async (status) => {
       headers['x-org-id'] = String(currentUser.ownedOrgId);
     }
   }
-  const response = await fetch(`/api/orgs${buildQuery({ status })}`, { headers });
+  const response = await fetch(`/api/ongs${buildQuery({ status })}`, { headers });
 
   let data = null;
   try {
@@ -72,7 +72,7 @@ export const getOrgs = async (status) => {
  * @returns {Promise<any>}
  * @throws {Error} Cuando la respuesta no es OK.
  */
-export const getOrgById = async (orgId) => {
+export const getOngById = async (ongId) => {
   const headers = { 'Content-Type': 'application/json' };
   const currentUser = getSessionUser();
   if (currentUser) {
@@ -82,7 +82,7 @@ export const getOrgById = async (orgId) => {
       headers['x-org-id'] = String(currentUser.ownedOrgId);
     }
   }
-  const response = await fetch(`/api/orgs/${orgId}`, { headers });
+  const response = await fetch(`/api/ongs/${ongId}`, { headers });
 
   let data = null;
   try {
@@ -108,7 +108,7 @@ export const getOrgById = async (orgId) => {
  * @returns {Promise<any>}
  * @throws {Error} Cuando la respuesta no es OK.
  */
-export const createOrg = async (payload) => {
+export const createOng = async (payload) => {
   const headers = { 'Content-Type': 'application/json' };
   const currentUser = getSessionUser();
   if (currentUser) {
@@ -118,7 +118,7 @@ export const createOrg = async (payload) => {
       headers['x-org-id'] = String(currentUser.ownedOrgId);
     }
   }
-  const response = await fetch('/api/orgs', {
+  const response = await fetch('/api/ongs', {
     method: 'POST',
     headers,
     body: JSON.stringify(payload),
@@ -149,7 +149,7 @@ export const createOrg = async (payload) => {
  * @returns {Promise<any>}
  * @throws {Error} Cuando la respuesta no es OK.
  */
-export const updateOrg = async (orgId, payload) => {
+export const updateOng = async (ongId, payload) => {
   const headers = { 'Content-Type': 'application/json' };
   const currentUser = getSessionUser();
   if (currentUser) {
@@ -159,7 +159,7 @@ export const updateOrg = async (orgId, payload) => {
       headers['x-org-id'] = String(currentUser.ownedOrgId);
     }
   }
-  const response = await fetch(`/api/orgs/${orgId}`, {
+  const response = await fetch(`/api/ongs/${ongId}`, {
     method: 'PUT',
     headers,
     body: JSON.stringify(payload),
@@ -189,7 +189,7 @@ export const updateOrg = async (orgId, payload) => {
  * @returns {Promise<any>}
  * @throws {Error} Cuando la respuesta no es OK.
  */
-export const deleteOrg = async (orgId) => {
+export const deleteOng = async (ongId) => {
   const headers = { 'Content-Type': 'application/json' };
   const currentUser = getSessionUser();
   if (currentUser) {
@@ -199,7 +199,7 @@ export const deleteOrg = async (orgId) => {
       headers['x-org-id'] = String(currentUser.ownedOrgId);
     }
   }
-  const response = await fetch(`/api/orgs/${orgId}`, { method: 'DELETE', headers });
+  const response = await fetch(`/api/ongs/${ongId}`, { method: 'DELETE', headers });
 
   let data = null;
   try {
@@ -226,7 +226,7 @@ export const deleteOrg = async (orgId) => {
  * @returns {Promise<any>}
  * @throws {Error} Cuando la respuesta no es OK.
  */
-export const setOrgStatus = async (orgId, status) => {
+export const setOngStatus = async (ongId, status) => {
   const headers = { 'Content-Type': 'application/json' };
   const currentUser = getSessionUser();
   if (currentUser) {
@@ -236,7 +236,7 @@ export const setOrgStatus = async (orgId, status) => {
       headers['x-org-id'] = String(currentUser.ownedOrgId);
     }
   }
-  const response = await fetch(`/api/orgs/${orgId}/status`, {
+  const response = await fetch(`/api/ongs/${ongId}/status`, {
     method: 'PATCH',
     headers,
     body: JSON.stringify({ status }),
@@ -267,7 +267,7 @@ export const setOrgStatus = async (orgId, status) => {
  * @returns {Promise<any>}
  * @throws {Error} Cuando la respuesta no es OK.
  */
-export const requestJoinOrg = async (orgId, userId) => {
+export const requestJoinOng = async (ongId, userId) => {
   const headers = { 'Content-Type': 'application/json' };
   const currentUser = getSessionUser();
   if (currentUser) {
@@ -277,7 +277,7 @@ export const requestJoinOrg = async (orgId, userId) => {
       headers['x-org-id'] = String(currentUser.ownedOrgId);
     }
   }
-  const response = await fetch(`/api/orgs/${orgId}/join-requests`, {
+  const response = await fetch(`/api/ongs/${ongId}/join-requests`, {
     method: 'POST',
     headers,
     body: JSON.stringify({ userId }),
@@ -307,7 +307,7 @@ export const requestJoinOrg = async (orgId, userId) => {
  * @returns {Promise<any>}
  * @throws {Error} Cuando la respuesta no es OK.
  */
-export const getOrgRequests = async (orgId) => {
+export const getOngRequests = async (ongId) => {
   const headers = { 'Content-Type': 'application/json' };
   const currentUser = getSessionUser();
   if (currentUser) {
@@ -317,7 +317,7 @@ export const getOrgRequests = async (orgId) => {
       headers['x-org-id'] = String(currentUser.ownedOrgId);
     }
   }
-  const response = await fetch(`/api/orgs/${orgId}/join-requests`, { headers });
+  const response = await fetch(`/api/ongs/${ongId}/join-requests`, { headers });
 
   let data = null;
   try {
@@ -345,7 +345,7 @@ export const getOrgRequests = async (orgId) => {
  * @returns {Promise<any>}
  * @throws {Error} Cuando la respuesta no es OK.
  */
-export const resolveOrgRequest = async (orgId, requestId, status) => {
+export const resolveOngRequest = async (ongId, requestId, status) => {
   const headers = { 'Content-Type': 'application/json' };
   const currentUser = getSessionUser();
   if (currentUser) {
@@ -355,7 +355,7 @@ export const resolveOrgRequest = async (orgId, requestId, status) => {
       headers['x-org-id'] = String(currentUser.ownedOrgId);
     }
   }
-  const response = await fetch(`/api/orgs/${orgId}/join-requests/${requestId}`, {
+  const response = await fetch(`/api/ongs/${ongId}/join-requests/${requestId}`, {
     method: 'PATCH',
     headers,
     body: JSON.stringify({ status }),

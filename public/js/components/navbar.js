@@ -7,16 +7,16 @@ const guestLinks = [
   { href: '/pages/practiques-sostenibles.html', label: 'Pràctiques' },
   { href: '/pages/economia-circular.html', label: 'Economia circular' },
   { href: '/pages/events.html', label: 'Events' },
-  { href: '/pages/orgs.html', label: 'ORGs' },
+  { href: '/pages/ongs.html', label: 'ONGs' },
   { href: '/pages/empresa-sostenible.html', label: 'Empresa sostenible' },
-  { href: '/pages/register-org.html', label: 'Crear ORG' },
+  { href: '/pages/register-ong.html', label: 'Crear ONG' },
 ];
 
 const profileLink = { href: '/pages/profile.html', label: 'Perfil' };
-const orgExtraLinks = [{ href: '/pages/org-dashboard.html', label: 'Dashboard ORG' }];
+const ongExtraLinks = [{ href: '/pages/ong-dashboard.html', label: 'Dashboard ONG' }];
 const adminExtraLinks = [
   { href: '/pages/admin-users.html', label: 'Admin usuaris' },
-  { href: '/pages/admin-org-requests.html', label: 'Aprovació ORG' },
+  { href: '/pages/admin-ong-requests.html', label: 'Aprovació ONG' },
 ];
 
 /**
@@ -56,13 +56,13 @@ window.initializeNavbar = () => {
   const currentUser = getSessionUser();
   let navLinks = guestLinks.slice();
   if (currentUser?.orgId || currentUser?.ownedOrgId) {
-    navLinks = navLinks.filter((linkItem) => linkItem.href !== '/pages/register-org.html');
+    navLinks = navLinks.filter((linkItem) => linkItem.href !== '/pages/register-ong.html');
   }
   if (currentUser) {
     navLinks = navLinks.concat(profileLink);
   }
-  if (currentUser?.role === 'org') {
-    navLinks = navLinks.concat(orgExtraLinks);
+  if (currentUser?.role === 'ong') {
+    navLinks = navLinks.concat(ongExtraLinks);
   }
   if (currentUser?.role === 'admin') {
     navLinks = navLinks.concat(adminExtraLinks);

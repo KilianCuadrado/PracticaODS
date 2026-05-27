@@ -8,7 +8,7 @@ import { nextId, readDb, writeDb } from './db.js';
  * @param {string} status
  * @returns {Array<Record<string, any>>}
  */
-export const listOrgs = (status) => {
+export const listOngs = (status) => {
   const db = readDb();
   if (!status) {
     return db.orgs;
@@ -30,10 +30,10 @@ export const listOrgs = (status) => {
  * @param {string | number} orgId
  * @returns {Record<string, any> | null}
  */
-export const findOrgById = (orgId) => {
+export const findOngById = (ongId) => {
   const db = readDb();
   for (let i = 0; i < db.orgs.length; i += 1) {
-    if (Number(db.orgs[i].id) === Number(orgId)) {
+    if (Number(db.orgs[i].id) === Number(ongId)) {
       return db.orgs[i];
     }
   }
@@ -48,7 +48,7 @@ export const findOrgById = (orgId) => {
  * @param {string} name
  * @returns {Record<string, any> | null}
  */
-export const findOrgByName = (name) => {
+export const findOngByName = (name) => {
   const db = readDb();
   for (let i = 0; i < db.orgs.length; i += 1) {
     if (String(db.orgs[i].name || '').toLowerCase() === String(name).toLowerCase()) {
@@ -66,7 +66,7 @@ export const findOrgByName = (name) => {
  * @param {string | number} ownerUserId
  * @returns {Record<string, any> | null}
  */
-export const findOrgByOwnerId = (ownerUserId) => {
+export const findOngByOwnerId = (ownerUserId) => {
   const db = readDb();
   for (let i = 0; i < db.orgs.length; i += 1) {
     if (Number(db.orgs[i].ownerUserId) === Number(ownerUserId)) {
@@ -84,7 +84,7 @@ export const findOrgByOwnerId = (ownerUserId) => {
  * @param {Record<string, any>} payload
  * @returns {Record<string, any>}
  */
-export const createOrg = (payload) => {
+export const createOng = (payload) => {
   const db = readDb();
   const newOrg = {
     id: nextId(db.orgs),
@@ -110,11 +110,11 @@ export const createOrg = (payload) => {
  * @param {Record<string, any>} payload
  * @returns {Record<string, any> | null}
  */
-export const updateOrg = (orgId, payload) => {
+export const updateOng = (ongId, payload) => {
   const db = readDb();
   let orgIndex = -1;
   for (let i = 0; i < db.orgs.length; i += 1) {
-    if (Number(db.orgs[i].id) === Number(orgId)) {
+    if (Number(db.orgs[i].id) === Number(ongId)) {
       orgIndex = i;
       break;
     }
@@ -151,11 +151,11 @@ export const updateOrg = (orgId, payload) => {
  * @param {string | number} orgId
  * @returns {Record<string, any> | null}
  */
-export const deleteOrg = (orgId) => {
+export const deleteOng = (ongId) => {
   const db = readDb();
   let orgIndex = -1;
   for (let i = 0; i < db.orgs.length; i += 1) {
-    if (Number(db.orgs[i].id) === Number(orgId)) {
+    if (Number(db.orgs[i].id) === Number(ongId)) {
       orgIndex = i;
       break;
     }
@@ -168,7 +168,7 @@ export const deleteOrg = (orgId) => {
 
   const remainingEvents = [];
   for (let i = 0; i < db.events.length; i += 1) {
-    if (Number(db.events[i].orgId) !== Number(orgId)) {
+    if (Number(db.events[i].orgId) !== Number(ongId)) {
       remainingEvents.push(db.events[i]);
     }
   }
@@ -176,7 +176,7 @@ export const deleteOrg = (orgId) => {
 
   const remainingRequests = [];
   for (let i = 0; i < db.orgJoinRequests.length; i += 1) {
-    if (Number(db.orgJoinRequests[i].orgId) !== Number(orgId)) {
+    if (Number(db.orgJoinRequests[i].orgId) !== Number(ongId)) {
       remainingRequests.push(db.orgJoinRequests[i]);
     }
   }
@@ -195,11 +195,11 @@ export const deleteOrg = (orgId) => {
  * @param {string} status
  * @returns {Record<string, any> | null}
  */
-export const updateOrgStatus = (orgId, status) => {
+export const updateOngStatus = (ongId, status) => {
   const db = readDb();
   let orgIndex = -1;
   for (let i = 0; i < db.orgs.length; i += 1) {
-    if (Number(db.orgs[i].id) === Number(orgId)) {
+    if (Number(db.orgs[i].id) === Number(ongId)) {
       orgIndex = i;
       break;
     }
@@ -221,11 +221,11 @@ export const updateOrgStatus = (orgId, status) => {
  * @param {string | number} userId
  * @returns {Record<string, any>}
  */
-export const createOrgJoinRequest = (orgId, userId) => {
+export const createOngJoinRequest = (ongId, userId) => {
   const db = readDb();
   const newRequest = {
     id: nextId(db.orgJoinRequests),
-    orgId,
+    orgId: ongId,
     userId,
     status: 'pending',
     createdAt: new Date().toISOString(),
@@ -243,11 +243,11 @@ export const createOrgJoinRequest = (orgId, userId) => {
  * @param {string | number} orgId
  * @returns {Array<Record<string, any>>}
  */
-export const listOrgRequests = (orgId) => {
+export const listOngRequests = (ongId) => {
   const db = readDb();
   const requests = [];
   for (let i = 0; i < db.orgJoinRequests.length; i += 1) {
-    if (Number(db.orgJoinRequests[i].orgId) === Number(orgId)) {
+    if (Number(db.orgJoinRequests[i].orgId) === Number(ongId)) {
       requests.push(db.orgJoinRequests[i]);
     }
   }
@@ -264,12 +264,12 @@ export const listOrgRequests = (orgId) => {
  * @param {string} status
  * @returns {Record<string, any> | null}
  */
-export const resolveOrgRequest = (orgId, requestId, status) => {
+export const resolveOngRequest = (ongId, requestId, status) => {
   const db = readDb();
   let requestIndex = -1;
   for (let i = 0; i < db.orgJoinRequests.length; i += 1) {
     const requestItem = db.orgJoinRequests[i];
-    if (Number(requestItem.id) === Number(requestId) && Number(requestItem.orgId) === Number(orgId)) {
+    if (Number(requestItem.id) === Number(requestId) && Number(requestItem.orgId) === Number(ongId)) {
       requestIndex = i;
       break;
     }
@@ -283,7 +283,7 @@ export const resolveOrgRequest = (orgId, requestId, status) => {
     const requestData = db.orgJoinRequests[requestIndex];
     for (let i = 0; i < db.users.length; i += 1) {
       if (Number(db.users[i].id) === Number(requestData.userId)) {
-        db.users[i].orgId = orgId;
+        db.users[i].orgId = ongId;
         break;
       }
     }

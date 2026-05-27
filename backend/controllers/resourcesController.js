@@ -78,7 +78,7 @@ export const createNewResource = (req, res) => {
     return sendError(res, 400, 'Falta userId en la sesion');
   }
 
-  const requesterOrgId = getRequestRole(req) === 'org' ? getRequestOrgId(req) : null;
+  const requesterOrgId = getRequestRole(req) === 'ong' ? getRequestOrgId(req) : null;
 
   const newListing = createResource({
     type,

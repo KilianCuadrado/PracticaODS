@@ -1,4 +1,4 @@
-import { registerOrgApi } from '../api/authApi.js';
+import { registerOngApi } from '../api/authApi.js';
 import { showToast } from '../components/toast.js';
 import { getSessionUser } from '../utils/session.js';
 import {
@@ -12,7 +12,7 @@ import {
 const registerOrgForm = document.getElementById('registerOrgForm');
 
 /**
- * Gestiona el submit del registro de ORG.
+ * Gestiona el submit del registro de ONG.
  *
  * @author KiliaCuadrado
  * @date 2026-05-27
@@ -24,22 +24,22 @@ const handleRegisterOrgSubmit = async (event) => {
 
   const currentUser = getSessionUser();
   if (!currentUser) {
-    showToast({ message: 'Debes iniciar sesión como usuario para registrar una ORG', type: 'warning' });
+    showToast({ message: 'Debes iniciar sesión como usuario para registrar una ONG', type: 'warning' });
     return;
   }
 
-  const orgName = document.getElementById('orgName').value;
+  const ongName = document.getElementById('orgName').value;
   const description = document.getElementById('orgDescription').value;
   const contactEmail = document.getElementById('orgEmail').value;
   const image = document.getElementById('orgImage').value;
   const url = document.getElementById('orgUrl').value;
 
-  if (!requiredFieldsFilled([orgName, description, contactEmail])) {
+  if (!requiredFieldsFilled([ongName, description, contactEmail])) {
     showToast({ message: 'Completa nombre, descripción y email de contacto', type: 'warning' });
     return;
   }
-  if (!hasMinLength(orgName, 3) || !hasMaxLength(orgName, 80)) {
-    showToast({ message: 'El nombre de ORG debe tener entre 3 y 80 caracteres', type: 'warning' });
+  if (!hasMinLength(ongName, 3) || !hasMaxLength(ongName, 80)) {
+    showToast({ message: 'El nombre de ONG debe tener entre 3 y 80 caracteres', type: 'warning' });
     return;
   }
   if (!hasMinLength(description, 20) || !hasMaxLength(description, 500)) {
@@ -55,13 +55,13 @@ const handleRegisterOrgSubmit = async (event) => {
     return;
   }
   if (url && !isValidUrl(url)) {
-    showToast({ message: 'La web de la ORG no es válida', type: 'warning' });
+    showToast({ message: 'La web de la ONG no es válida', type: 'warning' });
     return;
   }
 
   try {
-    await registerOrgApi({
-      orgName,
+    await registerOngApi({
+      ongName,
       description,
       contactEmail,
       image,

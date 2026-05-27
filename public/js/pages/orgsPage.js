@@ -1,4 +1,4 @@
-import { getOrgs, requestJoinOrg } from '../api/orgsApi.js';
+import { getOngs, requestJoinOng } from '../api/orgsApi.js';
 import { showToast } from '../components/toast.js';
 import { getSessionUser } from '../utils/session.js';
 
@@ -18,12 +18,12 @@ const getJoinButtonState = (currentUser, orgItem) => {
     return { label: 'Solicitar unión', disabled: false };
   }
   if (currentUser.ownedOrgId) {
-    return { label: 'Ya tienes una ORG', disabled: true };
+    return { label: 'Ya tienes una ONG', disabled: true };
   }
   if (currentUser.orgId) {
     const isSameOrg = Number(currentUser.orgId) === Number(orgItem.id);
     return {
-      label: isSameOrg ? 'Ya eres miembro' : 'Ya perteneces a una ORG',
+      label: isSameOrg ? 'Ya eres miembro' : 'Ya perteneces a una ONG',
       disabled: true,
     };
   }
@@ -44,7 +44,7 @@ const renderOrgs = (orgs, currentUser) => {
     return;
   }
   if (orgs.length === 0) {
-    orgsList.innerHTML = '<p class="text-muted">No hay organizaciones aprobadas.</p>';
+    orgsList.innerHTML = '<p class="text-muted">No hay ONGs aprobadas.</p>';
     return;
   }
   orgsList.innerHTML = orgs
@@ -57,7 +57,7 @@ const renderOrgs = (orgs, currentUser) => {
         <p>${orgItem.description}</p>
         ${
           orgItem.url
-            ? `<p><a href="${orgItem.url}" target="_blank" rel="noopener noreferrer">Web de la ORG</a></p>`
+            ? `<p><a href="${orgItem.url}" target="_blank" rel="noopener noreferrer">Web de la ONG</a></p>`
             : ''
         }
         <button class="btn btn-outline-success joinOrgBtn" data-org-id="${orgItem.id}" ${buttonState.disabled ? 'disabled' : ''}>
@@ -86,11 +86,11 @@ const bindJoinOrgButtons = () => {
       }
       const currentUser = getSessionUser();
       if (!currentUser) {
-        showToast({ message: 'Debes iniciar sesión para solicitar unión a una ORG', type: 'warning' });
+        showToast({ message: 'Debes iniciar sesión para solicitar unión a una ONG', type: 'warning' });
         return;
       }
       try {
-        await requestJoinOrg(button.dataset.orgId, currentUser.id);
+        await requestJoinOng(button.dataset.orgId, currentUser.id);
         showToast({ message: 'Solicitud enviada', type: 'success' });
       } catch (error) {
         showToast({ message: error.message, type: 'error' });
@@ -109,7 +109,7 @@ const bindJoinOrgButtons = () => {
 const initOrgsPage = async () => {
   try {
     const currentUser = getSessionUser();
-    const orgs = await getOrgs('approved');
+    const orgs = await getOngs('approved');
     renderOrgs(orgs, currentUser);
     bindJoinOrgButtons();
   } catch (error) {

@@ -37,7 +37,7 @@ const canManageResource = (resource, currentUser) => {
   if (Number(resource.ownerUserId) === Number(currentUser.id)) {
     return true;
   }
-  return currentUser.role === 'org' && currentUser.ownedOrgId && Number(resource.orgId) === Number(currentUser.ownedOrgId);
+  return currentUser.role === 'ong' && currentUser.ownedOrgId && Number(resource.orgId) === Number(currentUser.ownedOrgId);
 };
 
 /**

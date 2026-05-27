@@ -30,6 +30,34 @@ export const setSessionUser = (userData) => {
 };
 
 /**
+ * Devuelve el token JWT guardado en la sesion.
+ *
+ * @author KiliaCuadrado
+ * @date 2026-05-27
+ * @returns {string}
+ */
+export const getSessionToken = () => {
+  const sessionUser = getSessionUser();
+  return sessionUser && sessionUser.token ? String(sessionUser.token) : '';
+};
+
+/**
+ * Crea headers JSON con JWT si existe.
+ *
+ * @author KiliaCuadrado
+ * @date 2026-05-27
+ * @returns {Record<string, string>}
+ */
+export const buildAuthHeaders = () => {
+  const headers = { 'Content-Type': 'application/json' };
+  const token = getSessionToken();
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+  return headers;
+};
+
+/**
  * Limpia el usuario de sessionStorage.
  *
  * @author KiliaCuadrado

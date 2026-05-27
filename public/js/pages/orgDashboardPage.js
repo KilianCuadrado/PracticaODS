@@ -1,5 +1,5 @@
 import { createEvent, deleteEvent, getEvents, updateEvent } from '../api/eventsApi.js';
-import { getOrgRequests, resolveOrgRequest } from '../api/orgsApi.js';
+import { getOngRequests, resolveOngRequest } from '../api/orgsApi.js';
 import { showToast } from '../components/toast.js';
 import { getSessionUser } from '../utils/session.js';
 import { hasMaxLength, hasMinLength, isFutureOrToday, requiredFieldsFilled } from '../utils/validators.js';
@@ -9,7 +9,7 @@ const orgRequestsBody = document.getElementById('orgRequestsBody');
 const eventForm = document.getElementById('orgEventForm');
 
 /**
- * Obtiene la org del usuario org y redirige si no aplica.
+ * Obtiene la ONG del usuario ONG y redirige si no aplica.
  *
  * @author KiliaCuadrado
  * @date 2026-05-27
@@ -17,7 +17,7 @@ const eventForm = document.getElementById('orgEventForm');
  */
 const getOwnedOrgId = () => {
   const currentUser = getSessionUser();
-  if (!currentUser || currentUser.role !== 'org' || !currentUser.ownedOrgId) {
+  if (!currentUser || currentUser.role !== 'ong' || !currentUser.ownedOrgId) {
     window.location.href = '/pages/login.html';
     return null;
   }
@@ -25,7 +25,7 @@ const getOwnedOrgId = () => {
 };
 
 /**
- * Carga eventos de la org y renderiza la tabla.
+ * Carga eventos de la ONG y renderiza la tabla.
  *
  * @author KiliaCuadrado
  * @date 2026-05-27
@@ -75,7 +75,7 @@ const loadOrgEvents = async (orgId) => {
 };
 
 /**
- * Carga solicitudes de union de la org.
+ * Carga solicitudes de union de la ONG.
  *
  * @author KiliaCuadrado
  * @date 2026-05-27
@@ -83,7 +83,7 @@ const loadOrgEvents = async (orgId) => {
  * @returns {Promise<void>}
  */
 const loadOrgRequests = async (orgId) => {
-  const requests = await getOrgRequests(orgId);
+  const requests = await getOngRequests(orgId);
   const pendingRequests = requests.filter((request) => request.status === 'pending');
   orgRequestsBody.innerHTML = pendingRequests.length
     ? pendingRequests
@@ -106,7 +106,7 @@ const loadOrgRequests = async (orgId) => {
   document.querySelectorAll('.approveJoinBtn').forEach((button) => {
     button.addEventListener('click', async () => {
       try {
-        await resolveOrgRequest(orgId, button.dataset.id, 'approved');
+        await resolveOngRequest(orgId, button.dataset.id, 'approved');
         await loadOrgRequests(orgId);
         showToast({ message: 'Solicitud aprobada', type: 'success' });
       } catch (error) {
@@ -118,7 +118,7 @@ const loadOrgRequests = async (orgId) => {
   document.querySelectorAll('.rejectJoinBtn').forEach((button) => {
     button.addEventListener('click', async () => {
       try {
-        await resolveOrgRequest(orgId, button.dataset.id, 'rejected');
+        await resolveOngRequest(orgId, button.dataset.id, 'rejected');
         await loadOrgRequests(orgId);
         showToast({ message: 'Solicitud rechazada', type: 'success' });
       } catch (error) {
@@ -129,7 +129,7 @@ const loadOrgRequests = async (orgId) => {
 };
 
 /**
- * Inicializa el dashboard de org.
+ * Inicializa el dashboard de ONG.
  *
  * @author KiliaCuadrado
  * @date 2026-05-27

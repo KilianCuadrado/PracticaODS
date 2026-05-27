@@ -92,7 +92,7 @@ export const registerUserApi = async (username, email, password) => {
  * @returns {Promise<any>}
  * @throws {Error} Cuando la respuesta no es OK.
  */
-export const registerOrgApi = async (payload) => {
+export const registerOngApi = async (payload) => {
   const headers = { 'Content-Type': 'application/json' };
   const currentUser = getSessionUser();
   if (currentUser) {
@@ -102,7 +102,7 @@ export const registerOrgApi = async (payload) => {
       headers['x-org-id'] = String(currentUser.ownedOrgId);
     }
   }
-  const response = await fetch('/api/auth/register-org', {
+  const response = await fetch('/api/auth/register-ong', {
     method: 'POST',
     headers,
     body: JSON.stringify(payload),

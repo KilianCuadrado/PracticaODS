@@ -1,15 +1,12 @@
 import { createUser, findUserByEmail, findUserById } from '../models/usersModel.js';
-import { createOrg, findOrgByName, findOrgByOwnerId } from '../models/orgsModel.js';
+import { createOng, findOngByName, findOngByOwnerId } from '../models/ongsModel.js';
 import { isValidEmail, parseId, sendError } from '../utils/http.js';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import config from '../config.js';
 
 /**
- * Registro de usuario normal.
- *
- * @author KiliaCuadrado
- * @date 2026-05-27
- * @param {import('express').Request} req
- * @param {import('express').Response} res
- * @returns {import('express').Response}
+ * Registro de usuario normal (ahora con hash de contraseña).
  */
 export const registerUser = (req, res) => {
   const username = req.body?.username;
@@ -28,44 +25,49 @@ export const registerUser = (req, res) => {
     return sendError(res, 409, 'Ya existe un usuario con ese email');
   }
 
+  const hashed = bcrypt.hashSync(String(password), 10);
+
   const newUser = createUser({
     username,
     email,
-    password,
+    password: hashed,
     role: 'user',
     orgId: null,
   });
 
-  return res.status(201).json({ message: 'Usuario registrado', user: newUser });
+  // Remove password before returning
+  const safeUser = {
+    id: newUser.id,
+    username: newUser.username,
+    email: newUser.email,
+    role: newUser.role,
+    orgId: newUser.orgId,
+  };
+
+  return res.status(201).json({ message: 'Usuario registrado', user: safeUser });
 };
 
 /**
  * Registro de ORG con estado pending.
- *
- * @author KiliaCuadrado
- * @date 2026-05-27
- * @param {import('express').Request} req
- * @param {import('express').Response} res
- * @returns {import('express').Response}
  */
-export const registerOrg = (req, res) => {
-  const orgName = req.body?.orgName;
+export const registerOng = (req, res) => {
+  const ongName = req.body?.ongName;
   const description = req.body?.description;
   const contactEmail = req.body?.contactEmail;
   const image = req.body?.image || '';
   const url = req.body?.url || '';
   const adminUserId = req.body?.adminUserId;
 
-  if (!orgName || !description || !contactEmail || !adminUserId) {
-    return sendError(res, 400, 'orgName, description, contactEmail y adminUserId son obligatorios');
+  if (!ongName || !description || !contactEmail || !adminUserId) {
+    return sendError(res, 400, 'ongName, description, contactEmail y adminUserId son obligatorios');
   }
   if (!isValidEmail(contactEmail)) {
     return sendError(res, 400, 'contactEmail no válido');
   }
 
-  const orgExists = findOrgByName(orgName);
-  if (orgExists) {
-    return sendError(res, 409, 'Ya existe una ORG con ese nombre');
+  const ongExists = findOngByName(ongName);
+  if (ongExists) {
+    return sendError(res, 409, 'Ya existe una ONG con ese nombre');
   }
 
   const adminId = parseId(adminUserId);
@@ -75,11 +77,11 @@ export const registerOrg = (req, res) => {
 
   const adminUser = findUserById(adminId);
   if (!adminUser) {
-    return sendError(res, 404, 'No existe el usuario administrador de la ORG');
+    return sendError(res, 404, 'No existe el usuario administrador de la ONG');
   }
 
-  const newOrg = createOrg({
-    name: orgName,
+  const newOng = createOng({
+    name: ongName,
     description,
     image,
     url,
@@ -88,17 +90,11 @@ export const registerOrg = (req, res) => {
     status: 'pending',
   });
 
-  return res.status(201).json({ message: 'Solicitud de ORG enviada', org: newOrg });
+  return res.status(201).json({ message: 'Solicitud de ONG enviada', ong: newOng });
 };
 
 /**
- * Login simple contra el JSON.
- *
- * @author KiliaCuadrado
- * @date 2026-05-27
- * @param {import('express').Request} req
- * @param {import('express').Response} res
- * @returns {import('express').Response}
+ * Login con verificación de hash y emisión de JWT.
  */
 export const login = (req, res) => {
   const email = req.body?.email;
@@ -109,25 +105,42 @@ export const login = (req, res) => {
   }
 
   const user = findUserByEmail(email);
-  if (!user || String(user.password) !== String(password)) {
+  const passwordMatches =
+    bcrypt.compareSync(String(password), String(user.password)) ||
+    String(password) === String(user.password);
+
+  if (!user || !passwordMatches) {
     return sendError(res, 401, 'Credenciales inválidas');
   }
 
-  const ownedOrg = findOrgByOwnerId(user.id);
+  const ownedOng = findOngByOwnerId(user.id);
   const sessionRole =
-    ownedOrg && ownedOrg.status === 'approved' ? 'org' : user.role || 'user';
+    ownedOng && ownedOng.status === 'approved' ? 'ong' : user.role || 'user';
+
+  const tokenPayload = {
+    id: user.id,
+    username: user.username,
+    email: user.email,
+    role: sessionRole,
+    orgId: ownedOng && ownedOng.status === 'approved' ? ownedOng.id : null,
+  };
+
+  const token = jwt.sign(tokenPayload, config.JWT_SECRET, { expiresIn: config.JWT_EXPIRES_IN });
+
+  const safeUser = {
+    id: user.id,
+    username: user.username,
+    email: user.email,
+    role: sessionRole,
+    baseRole: user.role || 'user',
+    orgId: user.orgId || null,
+    ownedOrgId: ownedOng ? ownedOng.id : null,
+    ownedOrgStatus: ownedOng ? ownedOng.status : null,
+  };
 
   return res.status(200).json({
     message: 'Login correcto',
-    user: {
-      id: user.id,
-      username: user.username,
-      email: user.email,
-      role: sessionRole,
-      baseRole: user.role || 'user',
-      orgId: user.orgId || null,
-      ownedOrgId: ownedOrg ? ownedOrg.id : null,
-      ownedOrgStatus: ownedOrg ? ownedOrg.status : null,
-    },
+    token,
+    user: safeUser,
   });
 };

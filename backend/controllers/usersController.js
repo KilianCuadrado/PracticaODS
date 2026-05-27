@@ -173,7 +173,7 @@ export const getUserEvents = (req, res) => {
 };
 
 /**
- * Solicitudes de ORG de un usuario.
+ * Solicitudes de ONG de un usuario.
  *
  * @author KiliaCuadrado
  * @date 2026-05-27
@@ -181,7 +181,7 @@ export const getUserEvents = (req, res) => {
  * @param {import('express').Response} res
  * @returns {import('express').Response}
  */
-export const getUserOrgRequests = (req, res) => {
+export const getUserOngRequests = (req, res) => {
   const userId = parseId(req.params.id);
   if (Number.isNaN(userId)) {
     return sendError(res, 400, 'ID de usuario no válido');

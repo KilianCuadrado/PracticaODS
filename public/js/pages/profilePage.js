@@ -1,4 +1,4 @@
-import { getUserEvents, getUserOrgRequests, getUserById, updateUser } from '../api/usersApi.js';
+import { getUserEvents, getUserOngRequests, getUserById, updateUser } from '../api/usersApi.js';
 import { showToast } from '../components/toast.js';
 import { getSessionUser, setSessionUser } from '../utils/session.js';
 import { hasMaxLength, hasMinLength, requiredFieldsFilled } from '../utils/validators.js';
@@ -23,28 +23,28 @@ const initProfilePage = async () => {
   }
 
   try {
-    const [userData, userEvents, orgRequests] = await Promise.all([
+    const [userData, userEvents, ongRequests] = await Promise.all([
       getUserById(currentUser.id),
       getUserEvents(currentUser.id),
-      getUserOrgRequests(currentUser.id),
+      getUserOngRequests(currentUser.id),
     ]);
 
     profileDataBox.innerHTML = `
       <p><strong>Usuario:</strong> ${userData.username}</p>
       <p><strong>Email:</strong> ${userData.email}</p>
       <p><strong>Rol actual:</strong> ${currentUser.role}</p>
-      <p><strong>ORG asociada:</strong> ${userData.orgId || 'ninguna'}</p>
+      <p><strong>ONG asociada:</strong> ${userData.orgId || 'ninguna'}</p>
     `;
 
     userEventsBox.innerHTML = userEvents.length
       ? userEvents.map((eventItem) => `<li>${eventItem.title} (${eventItem.date})</li>`).join('')
       : '<li class="text-muted">No estás inscrito en eventos</li>';
 
-    userOrgRequestsBox.innerHTML = orgRequests.length
-      ? orgRequests
-          .map((request) => `<li>ORG ${request.orgId} · estado: <strong>${request.status}</strong></li>`)
+    userOrgRequestsBox.innerHTML = ongRequests.length
+      ? ongRequests
+          .map((request) => `<li>ONG ${request.orgId} · estado: <strong>${request.status}</strong></li>`)
           .join('')
-      : '<li class="text-muted">No tienes solicitudes de ORG</li>';
+      : '<li class="text-muted">No tienes solicitudes de ONG</li>';
   } catch (error) {
     profileDataBox.innerHTML = `<div class="alert alert-danger">${error.message}</div>`;
   }
