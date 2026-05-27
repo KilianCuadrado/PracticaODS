@@ -1,0 +1,13 @@
+.heroBox {
+  border-radius: 16px;
+  background: linear-gradient(120deg, rgba(0, 119, 190, 0.92), rgba(0, 168, 150, 0.9));
+  color: #fff;
+  padding: 2rem;
+}
+
+.infoStrip {
+  border-left: 4px solid var(--forestGreen);
+  background: #fff;
+  border-radius: 8px;
+  padding: 1rem;
+}

@@ -1,0 +1,21 @@
+:root {
+    --primary-color: #4CAF50;
+    --secondary-color: #333;
+    --background-color: #f4f4f4;
+    --text-color: #666;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+}
+
+h1 {
+    color: var(--primary-color);
+}
+
+p {
+    color: var(--text-color);
+}

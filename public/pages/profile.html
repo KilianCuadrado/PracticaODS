@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EcoODS · Perfil</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/styles/main.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="module" src="/js/components/navbar.js"></script>
+  <script defer src="/js/components/includeLoader.js"></script>
+  <script type="module" src="/js/pages/profilePage.js"></script>
+</head>
+<body>
+  <div data-include="/includes/navbar.html"></div>
+  <main class="container pageContainer">
+    <header class="pageHeader">
+      <h1>Perfil d'usuari</h1>
+      <p>Consulta la teva activitat i actualitza les dades bàsiques del teu compte.</p>
+    </header>
+    <section class="row g-3">
+      <div class="col-lg-4">
+        <article class="card cardFeature p-3">
+          <h2 class="h6">Dades actuals</h2>
+          <div id="profileData"></div>
+        </article>
+      </div>
+      <div class="col-lg-4">
+        <article class="card cardFeature p-3">
+          <h2 class="h6">Events inscrits</h2>
+          <ul id="userEvents" class="mb-0"></ul>
+        </article>
+      </div>
+      <div class="col-lg-4">
+        <article class="card cardFeature p-3">
+          <h2 class="h6">Sol·licituds ORG</h2>
+          <ul id="userOrgRequests" class="mb-0"></ul>
+        </article>
+      </div>
+    </section>
+    <section class="mt-4">
+      <form id="profileForm" class="card cardFeature p-3">
+        <h2 class="h6">Editar perfil</h2>
+        <input type="text" class="form-control mb-2" id="profileName" placeholder="Nou nom" required>
+        <input type="password" class="form-control mb-3" id="profilePassword" placeholder="Nova contrasenya (opcional)">
+        <button class="btn btn-primary" type="submit">Guardar canvis</button>
+      </form>
+    </section>
+    <section class="card cardFeature p-3 mt-3">
+      <h2 class="h6">Consells d'ús</h2>
+      <ul class="mb-0">
+        <li>Revisa regularment les teves sol·licituds d'ORG i el seu estat.</li>
+        <li>Mantén el teu perfil actualitzat per facilitar coordinació.</li>
+        <li>Participa en events recurrents per augmentar impacte positiu.</li>
+      </ul>
+    </section>
+  </main>
+  <div data-include="/includes/footer.html"></div>
+</body>
+</html>

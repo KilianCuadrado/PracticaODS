@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EcoODS · Economia circular</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/styles/main.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="module" src="/js/components/navbar.js"></script>
+  <script defer src="/js/components/includeLoader.js"></script>
+  <script type="module" src="/js/pages/resourcesPage.js"></script>
+</head>
+<body>
+  <div data-include="/includes/navbar.html"></div>
+  <main class="container pageContainer">
+    <header class="pageHeader">
+      <h1>Economia circular (RA4)</h1>
+      <p>Marketplace per compartir recursos, donar-los una segona vida i reduir residus.</p>
+    </header>
+    <section class="card cardFeature p-3 mb-3">
+      <h2 class="h6">Com funciona</h2>
+      <ol class="mb-0">
+        <li>Publica materials disponibles o necessitats.</li>
+        <li>Filtra per tipus, categoria o estat.</li>
+        <li>Contacta i dona una segona vida als recursos.</li>
+      </ol>
+    </section>
+    <section class="row g-3">
+      <div class="col-lg-4">
+        <article class="card cardFeature p-3 h-100">
+          <h2 class="h6">Publicar recurs</h2>
+          <p class="small text-muted" id="resourceAuthNotice">Inicia sesion para publicar un recurso.</p>
+          <form id="resourceForm" class="d-grid gap-2">
+            <div>
+              <label class="form-label" for="resourceType">Tipus *</label>
+              <select class="form-select" id="resourceType" required>
+                <option value="">Selecciona...</option>
+                <option value="offer">Oferta</option>
+                <option value="demand">Demanda</option>
+              </select>
+            </div>
+            <div>
+              <label class="form-label" for="resourceTitle">Titol *</label>
+              <input class="form-control" id="resourceTitle" type="text" maxlength="80" required>
+            </div>
+            <div>
+              <label class="form-label" for="resourceCategory">Categoria *</label>
+              <input class="form-control" id="resourceCategory" type="text" maxlength="40" required>
+            </div>
+            <div>
+              <label class="form-label" for="resourceDescription">Descripcio *</label>
+              <textarea class="form-control" id="resourceDescription" rows="3" maxlength="400" required></textarea>
+            </div>
+            <div class="row g-2">
+              <div class="col-6">
+                <label class="form-label" for="resourceQuantity">Quantitat</label>
+                <input class="form-control" id="resourceQuantity" type="number" min="1">
+              </div>
+              <div class="col-6">
+                <label class="form-label" for="resourceUnit">Unitat</label>
+                <input class="form-control" id="resourceUnit" type="text" maxlength="20">
+              </div>
+            </div>
+            <div>
+              <label class="form-label" for="resourceLocation">Ubicacio</label>
+              <input class="form-control" id="resourceLocation" type="text" maxlength="50">
+            </div>
+            <div>
+              <label class="form-label" for="resourceCondition">Estat del recurs</label>
+              <input class="form-control" id="resourceCondition" type="text" maxlength="40">
+            </div>
+            <button class="btn btn-success" type="submit">Publicar</button>
+          </form>
+        </article>
+      </div>
+      <div class="col-lg-8">
+        <article class="card cardFeature p-3">
+          <h2 class="h6">Buscar recursos</h2>
+          <form id="resourceFilters" class="row g-2 align-items-end">
+            <div class="col-sm-4 col-lg-3">
+              <label class="form-label" for="filterType">Tipus</label>
+              <select class="form-select" id="filterType">
+                <option value="">Tots</option>
+                <option value="offer">Oferta</option>
+                <option value="demand">Demanda</option>
+              </select>
+            </div>
+            <div class="col-sm-4 col-lg-3">
+              <label class="form-label" for="filterStatus">Estat</label>
+              <select class="form-select" id="filterStatus">
+                <option value="">Tots</option>
+                <option value="open">Obert</option>
+                <option value="closed">Tancat</option>
+              </select>
+            </div>
+            <div class="col-sm-4 col-lg-3">
+              <label class="form-label" for="filterCategory">Categoria</label>
+              <input class="form-control" id="filterCategory" type="text" placeholder="madera, vidrio...">
+            </div>
+            <div class="col-lg-3">
+              <label class="form-label" for="filterSearch">Cerca</label>
+              <input class="form-control" id="filterSearch" type="text" placeholder="titol o ubicacio">
+            </div>
+            <div class="col-12">
+              <button class="btn btn-outline-primary" type="submit">Aplicar filtres</button>
+            </div>
+          </form>
+        </article>
+        <section id="resourcesList" class="gridCards mt-3"></section>
+      </div>
+    </section>
+  </main>
+  <div data-include="/includes/footer.html"></div>
+</body>
+</html>

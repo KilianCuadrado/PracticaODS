@@ -1,0 +1,43 @@
+.cardFeature {
+  border: 0;
+  border-radius: 12px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.cardFeature:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.btn-primary {
+  background-color: var(--oceanBlue);
+  border-color: var(--oceanBlue);
+}
+
+.btn-primary:hover {
+  background-color: #0066a4;
+  border-color: #0066a4;
+}
+
+.btn-success {
+  background-color: var(--forestGreen);
+  border-color: var(--forestGreen);
+}
+
+.btn-danger {
+  background-color: var(--alertCoral);
+  border-color: var(--alertCoral);
+}
+
+.table thead th {
+  background-color: var(--sandLight);
+}
+
+#appToastContainer {
+  z-index: 1095;
+}
+
+#appToastContainer .toast {
+  min-width: 280px;
+}

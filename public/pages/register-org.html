@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EcoODS · Registre ORG</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/styles/main.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="module" src="/js/components/navbar.js"></script>
+  <script defer src="/js/components/includeLoader.js"></script>
+  <script type="module" src="/js/pages/registerOrgPage.js"></script>
+</head>
+<body>
+  <div data-include="/includes/navbar.html"></div>
+  <main class="container pageContainer">
+    <header class="pageHeader">
+      <h1>Sol·licitud de registre ORG</h1>
+      <p>L'alta requereix validació per part d'un administrador.</p>
+    </header>
+    <section class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+        <form id="registerOrgForm" class="card cardFeature p-3">
+          <label class="form-label" for="orgName">Nom ORG</label>
+          <input class="form-control mb-3" id="orgName" required>
+          <label class="form-label" for="orgDescription">Descripció</label>
+          <textarea class="form-control mb-3" id="orgDescription" rows="3" required></textarea>
+          <label class="form-label" for="orgEmail">Email contacte</label>
+          <input class="form-control mb-3" type="email" id="orgEmail" required>
+          <label class="form-label" for="orgImage">URL imatge (opcional)</label>
+          <input class="form-control mb-3" id="orgImage">
+          <label class="form-label" for="orgUrl">Web ORG (opcional)</label>
+          <input class="form-control mb-3" id="orgUrl">
+          <button class="btn btn-success" type="submit">Enviar sol·licitud</button>
+        </form>
+      </div>
+    </section>
+    <section class="row justify-content-center mt-2">
+      <div class="col-md-8 col-lg-6">
+        <article class="card cardFeature p-3">
+          <h2 class="h6">Criteris de validació</h2>
+          <ul class="mb-0">
+            <li>Descripció clara de l'objectiu ambiental o social.</li>
+            <li>Dades de contacte verificables.</li>
+            <li>Coherència amb ODS 14 i/o ODS 15.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+  </main>
+  <div data-include="/includes/footer.html"></div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EcoODS · Detall Event</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/styles/main.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="module" src="/js/components/navbar.js"></script>
+  <script defer src="/js/components/includeLoader.js"></script>
+  <script type="module" src="/js/pages/eventDetailPage.js"></script>
+</head>
+<body>
+  <div data-include="/includes/navbar.html"></div>
+  <main class="container pageContainer">
+    <header class="pageHeader">
+      <h1>Detall de l'event</h1>
+    </header>
+    <section class="card cardFeature p-3 mb-3">
+      <h2 class="h6">Abans d'apuntar-te</h2>
+      <ul class="mb-0">
+        <li>Revisa la descripció i la data de l'activitat.</li>
+        <li>Assegura't de tenir sessió iniciada.</li>
+        <li>Consulta l'objectiu ambiental de l'event per maximitzar impacte.</li>
+      </ul>
+    </section>
+    <section id="eventDetailContainer"></section>
+  </main>
+  <div data-include="/includes/footer.html"></div>
+</body>
+</html>

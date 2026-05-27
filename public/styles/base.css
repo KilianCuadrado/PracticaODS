@@ -1,0 +1,47 @@
+:root {
+  --oceanBlue: #0077be;
+  --forestGreen: #2e7d32;
+  --turquoise: #00a896;
+  --sandLight: #f1e9da;
+  --offWhite: #fafaf7;
+  --slateGray: #2f3e46;
+  --alertCoral: #e76f51;
+  --stateAmber: #f4a261;
+}
+
+body {
+  font-family: 'Inter', 'Poppins', sans-serif;
+  background-color: var(--offWhite);
+  color: var(--slateGray);
+}
+
+a {
+  color: var(--oceanBlue);
+}
+
+.text-ocean {
+  color: var(--oceanBlue) !important;
+}
+
+.text-forest {
+  color: var(--forestGreen) !important;
+}
+
+.bg-soft-sand {
+  background-color: var(--sandLight);
+}
+
+.badge-pending {
+  background-color: var(--stateAmber);
+  color: #fff;
+}
+
+.badge-approved {
+  background-color: var(--forestGreen);
+  color: #fff;
+}
+
+.badge-rejected {
+  background-color: var(--alertCoral);
+  color: #fff;
+}

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EcoODS · Admin Usuaris</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/styles/main.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="module" src="/js/components/navbar.js"></script>
+  <script defer src="/js/components/includeLoader.js"></script>
+  <script type="module" src="/js/pages/adminUsersPage.js"></script>
+</head>
+<body>
+  <div data-include="/includes/navbar.html"></div>
+  <main class="container pageContainer">
+    <header class="pageHeader">
+      <h1>Admin · Gestió d'usuaris</h1>
+      <p>Panell per crear, editar i eliminar usuaris de manera controlada.</p>
+    </header>
+    <section class="card cardFeature p-3 mb-3">
+      <h2 class="h6">Responsabilitats d'administració</h2>
+      <ul class="mb-0">
+        <li>Garantir qualitat i coherència de dades d'usuari.</li>
+        <li>Aplicar rols correctes segons necessitat del projecte.</li>
+        <li>Evitar comptes duplicats o inactius innecessaris.</li>
+      </ul>
+    </section>
+    <section class="row g-3">
+      <div class="col-lg-5">
+        <form id="adminUserForm" class="card cardFeature p-3">
+          <h2 class="h6">Crear/editar usuari</h2>
+          <input type="hidden" id="adminUserId">
+          <input class="form-control mb-2" id="adminUserName" placeholder="Nom" required>
+          <input class="form-control mb-2" id="adminUserEmail" type="email" placeholder="Email">
+          <input class="form-control mb-2" id="adminUserPassword" type="password" placeholder="Contrasenya">
+          <select class="form-select mb-3" id="adminUserRole">
+            <option value="user">user</option>
+            <option value="admin">admin</option>
+          </select>
+          <button class="btn btn-primary" type="submit">Guardar</button>
+        </form>
+      </div>
+      <div class="col-lg-7">
+        <div class="card cardFeature p-3">
+          <h2 class="h6">Llistat d'usuaris</h2>
+          <div class="table-responsive">
+            <table class="table">
+              <thead><tr><th>ID</th><th>Nom</th><th>Email</th><th>Rol</th><th>Accions</th></tr></thead>
+              <tbody id="usersTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div data-include="/includes/footer.html"></div>
+</body>
+</html>
