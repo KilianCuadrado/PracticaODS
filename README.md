@@ -2,7 +2,7 @@
 
 Proyecto web de sostenibilitat con eventos, orgs i recursos, front en public i backend en express
 
-> **Aviso:** Lee estos puntos para entender más sobre el proyecto
+> [!WARNING]
 > - Base de Datos: SQLite (`data/database.sqlite`)
 > - Dependencias: express, body-parser, better-sqlite3, jsonwebtoken, bcryptjs
 > - Dependencias de desarrollo: nodemon
