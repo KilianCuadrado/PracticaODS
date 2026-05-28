@@ -10,7 +10,7 @@ Proyecto web de sostenibilitat con eventos, orgs i recursos, front en public i b
 
 ## Como correr
 
-`npm run dev` i abre http://localhost:3000
+`npm install`, `npm run dev` i abre http://localhost:3000
 
 ## Web
 
