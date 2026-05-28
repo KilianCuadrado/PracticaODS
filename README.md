@@ -2,7 +2,7 @@
 
 Proyecto web de sostenibilitat con eventos, orgs i recursos, front en public i backend en express
 
-> [!WARNING] Lee estos bullet point para entender mas sobre el proyecto 
+> [!WARNING]
 > - Base de Datos: JSON (`data/db.json`) 
 > - Dependencias: Express, Body-Parser
 > - Dependencias de desarrollo: nodemon
